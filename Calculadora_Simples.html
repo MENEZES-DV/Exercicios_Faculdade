@@ -1,0 +1,174 @@
+<html>
+<head> 
+<style>
+    
+#display{
+    width: 240px;
+    height: 50px;
+    margin: 10px auto;
+    background-color: #474747;
+    text-align: right;
+    font-size: 24px;
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
+}
+
+button {
+    width: 50px;
+    height: 50px;
+    margin: 5px;
+    font-size: 18px;
+    background-color: #bababa;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    color: rgb(0, 0, 0);
+
+}
+body {
+    background-color: #474747;
+    display: flex;justify-content: center;
+    align-items: center;
+    height: 100vh;
+    
+}
+
+.calculadora {
+    background-color: rgb(255, 255, 255);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px gray;
+}
+
+.botaoigual{
+    background-color: green inportant;
+}
+
+</style>
+</head>
+<div class="Calculator">
+<div id="display"></div>
+<button onclick="calcularporcentagem('%')">%</button> 
+<button onclick="limpar('c')">c</button>
+<button onclick="backspace('⌫')">⌫</button>
+<button onclick="selectoperation('/')">/</button>
+</br>
+<button onclick="selectnumber('7')">7</button>   
+<button onclick="selectnumber('8')">8</button>
+<button onclick="selectnumber('9')">9</button>
+<button onclick="selectoperation('*')">*</button>
+</br>
+<button onclick="selectnumber('4')">4</button>
+<button onclick="selectnumber('5')">5</button>
+<button onclick="selectnumber('6')">6</button>
+<button onclick="selectoperation('-')">-</button>
+</br>
+<button onclick="selectnumber('1')">1</button>
+<button onclick="selectnumber('2')">2</button>
+<button onclick="selectnumber('3')">3</button>
+<button onclick="selectoperation('+')">+</button>
+</br>
+<button onclick="inverterSinal('')">+/-</button>
+<button onclick="selectnumber('0')">0</button>
+<button onclick="selectnumber('.')">.</button>
+<button class="botaoigual" onclick="calcular('=')">=</button>   <!button projetado para acoes clicaveis / div organizar e agrupar blocos de conteudos>
+</div>
+<script>
+var firstnumber = "";
+var numberatual = "";
+var operation = "";
+
+function selectnumber(valor){
+    numberatual += valor;
+    document.getElementById("display").innerText = numberatual;
+}
+function selectoperation(valor){
+    firstnumber = numberatual;
+    operation = valor;
+    numberatual = "";
+    document.getElementById("display").innerText = operation; 
+}
+function calcular(valor){
+    var num1 = parseFloat(firstnumber);
+    var num2 = parseFloat(numberatual);
+    var result= 0;
+    if (operation === "+"){
+        result = num1 + num2;
+        document.getElementById("display").innerText = num1 + "+" + num2  + "=" + result;
+    }
+        if (operation === "-"){
+        result = num1 - num2;
+        document.getElementById("display").innerText = num1 + "-" + num2  + "=" + result;
+        }
+            if (operation === "*"){
+                result = num1 * num2; 
+                document.getElementById("display").innerText = num1 + "*" + num2  + "=" + result; 
+            }
+                if (operation === "/"){
+                    result = num1 / num2;
+                    document.getElementById("display").innerText = num1 + "/" + num2  + "=" + result;
+                }
+}
+function calcularporcentagem(num1, num2, result){
+        var num1 = parseFloat(firstnumber);
+        var num2 = parseFloat(numberatual);
+        var result= 0;
+                if (operation === "*"){
+                   result = num1 * num2/100;
+                   document.getElementById("display").innerText = num1 + "*" + num2/100 + "=" + result; 
+                }
+}
+function limpar(){
+    firstnumber = "";
+    numberatual = "";
+    operation = "";
+    document.getElementById("display").innerText = "";
+}
+function backspace(){
+    numberatual = numberatual.slice(0, -1); 
+    document.getElementById("display").innerText = numberatual;
+}
+function inverterSinal() {
+    if (numberatual !== "") {
+        if (numberatual.startsWith("-")) {
+            numberatual = numberatual.slice(1);
+        } else {
+            numberatual = "-" + numberatual;
+        }
+        document.getElementById("display").innerText = numberatual;
+    }
+}
+document.addEventListener("keydown", function(event) {
+    const tecla = event.key;
+
+    if (!isNaN(tecla)) {
+        selectnumber(tecla);
+    }
+
+    if (tecla === "+" || tecla === "-" || tecla === "*" || tecla === "/") {
+        selectoperation(tecla);
+    }
+
+    if (tecla === "Enter" || tecla === "=") {
+        calcular();
+    }
+
+    if (tecla === "Backspace") {
+        backspace();
+    }
+
+    if (tecla === ".") {
+        selectnumber(".");
+    }
+
+    if (tecla === "%") {
+        calcularporcentagem();
+    }
+
+    if (tecla === "n") {
+        inverterSinal();
+    }
+});
+</script>
+</html>
